@@ -1,0 +1,54 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Página Inicial";
+}
+
+<div class="row gap-3 gap-lg-0 mt-4">
+    <div class="col">
+        <h2>Boas-vindas à Gestão de Equipamentos!</h2>
+        <hr>
+        <p class="mt-4">
+            Experimente as funcionalidades da nossa aplicação. Você pode gerenciar fabricantes, equipamentos e chamados.
+        </p>
+
+         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+            <div class="col">
+                <div class="card border-primary h-100">
+                    <a class="text-decoration-none" title="Editar" asp-controller="Fabricante" asp-action="Listar">
+                        <div class="card-body">
+                            <i class="bi bi-globe"></i>
+                            <h5>Fabricantes</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-primary h-100">
+                    <a class="text-decoration-none" title="Editar" asp-controller="Equipamento" asp-action="Listar">
+                        <div class="card-body">
+                            <i class="bi bi-pc-display-horizontal"></i>
+                            <h5>Equipamentos</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-primary h-100">
+                    <a class="text-decoration-none" title="Editar" asp-controller="Chamado" asp-action="Listar">
+                        <div class="card-body">
+                            <i class="bi bi-card-heading"></i>
+                            <h5>Chamados</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-lg-6">
+        <img class="img-fluid" src="~/img/undraw_logistics.svg"/>
+    </div>
+
+</div>
