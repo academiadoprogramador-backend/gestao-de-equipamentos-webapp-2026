@@ -1,4 +1,5 @@
 using GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura.Arquivos;
+using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Infraestrutura;
 
 namespace GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura;
@@ -18,5 +19,6 @@ public static class InjecaoDeDependencia
 
         // Configurar repositórios
         services.AddScoped<RepositorioFabricanteEmArquivo>();
+        services.AddScoped<RepositorioEquipamentoEmArquivo>();
     }
 }

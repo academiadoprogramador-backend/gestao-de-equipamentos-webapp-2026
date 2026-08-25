@@ -1,0 +1,53 @@
+@model EditarEquipamentoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Equipamento";
+}
+
+<div class="row justify-content-start">
+    <form class="col-lg-6" asp-action="Editar" asp-route-id="@Model.Id" method="post">
+        <input asp-for="Id" type="hidden">
+
+        <div>
+            <label class="form-label" asp-for="Nome"></label>
+            <input class="form-control" asp-for="Nome" type="text">
+            <span class="text-danger" asp-validation-for="Nome"></span>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label" asp-for="PrecoAquisicao">Preço de Aquisição</label>
+            <input class="form-control" asp-for="PrecoAquisicao" type="number" min="0.01" step="0.01">
+            <span class="text-danger" asp-validation-for="PrecoAquisicao"></span>
+        </div>
+        
+        <div class="mt-4">
+            <label class="form-label" asp-for="DataFabricacao">Data de Fabricação</label>
+            <input class="form-control" asp-for="DataFabricacao" type="date">
+            <span class="text-danger" asp-validation-for="DataFabricacao"></span>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label" asp-for="FabricanteId">Fabricante</label>
+            <select class="form-select" asp-for="FabricanteId">
+                <option value="0">Selecione um fabricante</option>
+                @foreach (SelecionarFabricanteViewModel fabricante in Model.FabricantesDisponiveis!)
+                {
+                    <option value="@fabricante.Id">@fabricante.Nome</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="FabricanteId"></span>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-check"></i>
+                Confirmar edição
+            </button>
+            <a class="btn btn-outline-secondary" asp-action="Listar">
+                <i class="bi bi-arrow-return-left"></i>
+                Voltar para a lista
+            </a>
+        </div>
+    </form>
+</div>

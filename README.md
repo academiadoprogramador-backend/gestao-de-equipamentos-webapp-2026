@@ -74,7 +74,7 @@ Como funcionário, Junior quer ter a possibilidade de excluir um equipamento que
 
 - A lista de equipamentos deve ser atualizada
 
-## 2. Controle de Chamados
+## 3. Controle de Chamados
 
 ### Requisito 3.1
 
