@@ -1,0 +1,53 @@
+@model EditarChamadoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Chamado";
+}
+
+<div class="row justify-content-start">
+    <form class="col-lg-6" asp-action="Editar" asp-route-id="@Model.Id" method="post">
+        <input asp-for="Id" type="hidden">
+
+        <div>
+            <label class="form-label" asp-for="Titulo">Título</label>
+            <input class="form-control" asp-for="Titulo" type="text">
+            <span class="text-danger" asp-validation-for="Titulo"></span>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label" asp-for="Descricao">Descrição</label>
+            <textarea class="form-control" asp-for="Descricao" rows="5"></textarea>
+            <span class="text-danger" asp-validation-for="Descricao"></span>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label" asp-for="EquipamentoId">Equipamento</label>
+            <select class="form-select" asp-for="EquipamentoId">
+                <option value="0">Selecione um equipamento</option>
+                @foreach (SelecionarEquipamentoViewModel equipamento in Model.EquipamentosDisponiveis!)
+                {
+                    <option value="@equipamento.Id">@equipamento.Nome</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="EquipamentoId"></span>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label" asp-for="DataAbertura">Data de Abertura</label>
+            <input class="form-control" asp-for="DataAbertura" type="date">
+            <span class="text-danger" asp-validation-for="DataAbertura"></span>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-check"></i>
+                Confirmar edição
+            </button>
+            <a class="btn btn-outline-secondary" asp-action="Listar">
+                <i class="bi bi-arrow-return-left"></i>
+                Voltar para a lista
+            </a>
+        </div>
+    </form>
+</div>

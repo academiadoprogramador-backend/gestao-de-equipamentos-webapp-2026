@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 
 namespace GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura.Arquivos;
@@ -10,6 +11,7 @@ public sealed class ContextoJson
 
     public List<Fabricante> Fabricantes { get; set; } = new List<Fabricante>();
     public List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
+    public List<Chamado> Chamados { get; set; } = new List<Chamado>();
 
     public ContextoJson()
     {
@@ -66,6 +68,7 @@ public sealed class ContextoJson
     {
         Fabricantes = contexto.Fabricantes;
         Equipamentos = contexto.Equipamentos;
+        Chamados = contexto.Chamados;
     }
 
     public ContextoJson CarregarDadosPredefinidos()
@@ -85,6 +88,12 @@ public sealed class ContextoJson
         {
             new("Notebook Dell", 3000m, DateTime.Parse("02/10/2023"), contextoPredefinido.Fabricantes[0]) { Id = 1 },
             new("Monitor Acer", 600m, DateTime.Parse("08/25/2025"), contextoPredefinido.Fabricantes[3]) { Id = 2 },
+        });
+
+        contextoPredefinido.Chamados.AddRange(new List<Chamado>
+        {
+            new("Tela não liga", "O notebook não apresenta imagem ao ser ligado.", contextoPredefinido.Equipamentos[0], DateTime.Today.AddDays(-3)) { Id = 1 },
+            new("Monitor piscando", "A imagem do monitor pisca durante o uso.", contextoPredefinido.Equipamentos[1], DateTime.Today.AddDays(-1)) { Id = 2 }
         });
 
         return contextoPredefinido;
