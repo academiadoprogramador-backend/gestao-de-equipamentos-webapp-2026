@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Infraestrutura;
+using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
 
 namespace GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Apresentacao;
 
 public sealed class FabricanteController : Controller
 {
-    private readonly RepositorioFabricanteEmArquivo repositorio;
+    private readonly IRepositorioFabricante repositorio;
 
-    public FabricanteController(RepositorioFabricanteEmArquivo repositorio)
+    public FabricanteController(IRepositorioFabricante repositorio)
     {
         this.repositorio = repositorio;
     }
