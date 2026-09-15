@@ -17,7 +17,7 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
     {
         const string query =
             """
-            INSERT INTO TBEquipamentos (Nome, PrecoAquisicao, DataFabricacao, FabricanteId)
+            INSERT INTO dbo.TBEquipamentos (Nome, PrecoAquisicao, DataFabricacao, FabricanteId)
             OUTPUT INSERTED.Id
             VALUES (@Nome, @PrecoAquisicao, @DataFabricacao, @FabricanteId)
             """;
@@ -37,7 +37,7 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
     {
         const string query =
             """
-            UPDATE TBEquipamentos
+            UPDATE dbo.TBEquipamentos
             SET
                 Nome = @Nome,
                 PrecoAquisicao = @PrecoAquisicao,
@@ -62,7 +62,7 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
 
     public bool Excluir(int idSelecionado)
     {
-        const string query = "DELETE FROM TBEquipamentos WHERE Id = @Id";
+        const string query = "DELETE FROM dbo.TBEquipamentos WHERE Id = @Id";
 
         using SqlConnection conexao = new(connectionString);
 
@@ -84,8 +84,8 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
                 f.Nome,
                 f.Email,
                 f.Telefone 
-            FROM TBEquipamentos e
-            INNER JOIN TBFabricantes f ON f.Id = e.FabricanteId
+            FROM dbo.TBEquipamentos e
+            INNER JOIN dbo.TBFabricantes f ON f.Id = e.FabricanteId
             WHERE e.Id = @Id
             """;
 
@@ -111,8 +111,8 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
                 f.Nome,
                 f.Email,
                 f.Telefone 
-            FROM TBEquipamentos e
-            INNER JOIN TBFabricantes f ON f.Id = e.FabricanteId
+            FROM dbo.TBEquipamentos e
+            INNER JOIN dbo.TBFabricantes f ON f.Id = e.FabricanteId
             ORDER BY e.Id
             """;
 
@@ -122,6 +122,22 @@ public sealed class RepositorioEquipamentoEmSql : IRepositorioEquipamento
             query,
             MapearEquipamentoCompleto
         ).ToList();
+    }
+
+    public bool ExisteParaFabricante(int fabricanteId)
+    {
+        const string query =
+            """
+            SELECT CAST(CASE WHEN EXISTS (
+                SELECT 1
+                FROM dbo.TBEquipamentos
+                WHERE FabricanteId = @FabricanteId
+            ) THEN 1 ELSE 0 END AS BIT)
+            """;
+
+        using SqlConnection conexao = new(connectionString);
+
+        return conexao.QuerySingle<bool>(query, new { FabricanteId = fabricanteId });
     }
 
     private static Equipamento MapearEquipamentoCompleto(

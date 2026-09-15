@@ -1,4 +1,4 @@
-using GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura.Arquivos;
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
@@ -14,15 +14,6 @@ public static class InjecaoDeDependencia
         IConfiguration configuration
     )
     {
-        services.AddScoped(services =>
-        {
-            ContextoJson contexto = new ContextoJson();
-
-            contexto.Carregar();
-
-            return contexto;
-        });
-
         string connectionString = configuration.GetConnectionString("SqlServerDocker")
             ?? throw new InvalidOperationException("A string de conexão \"SqlServerDocker\" não foi configurada");
 
@@ -37,6 +28,9 @@ public static class InjecaoDeDependencia
             return new RepositorioEquipamentoEmSql(connectionString);
         });
 
-        services.AddScoped<RepositorioChamadoEmArquivo>();
+        services.AddScoped<IRepositorioChamado>(_ =>
+        {
+            return new RepositorioChamadoEmSql(connectionString);
+        });
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
 
 namespace GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Apresentacao;
@@ -6,10 +7,15 @@ namespace GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Apresentacao;
 public sealed class FabricanteController : Controller
 {
     private readonly IRepositorioFabricante repositorio;
+    private readonly IRepositorioEquipamento repositorioEquipamento;
 
-    public FabricanteController(IRepositorioFabricante repositorio)
+    public FabricanteController(
+        IRepositorioFabricante repositorio,
+        IRepositorioEquipamento repositorioEquipamento
+    )
     {
         this.repositorio = repositorio;
+        this.repositorioEquipamento = repositorioEquipamento;
     }
 
     [HttpGet]
@@ -108,6 +114,16 @@ public sealed class FabricanteController : Controller
     [HttpPost]
     public ActionResult Excluir(ExcluirFabricanteViewModel excluirVm)
     {
+        if (repositorioEquipamento.ExisteParaFabricante(excluirVm.Id))
+        {
+            ModelState.AddModelError(
+                string.Empty,
+                "Este fabricante não pode ser excluído porque possui equipamentos vinculados."
+            );
+
+            return View(excluirVm);
+        }
+
         bool conseguiuExcluir = repositorio.Excluir(excluirVm.Id);
 
         if (!conseguiuExcluir)

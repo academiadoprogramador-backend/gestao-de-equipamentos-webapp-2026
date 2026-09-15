@@ -1,22 +1,24 @@
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Apresentacao;
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
-using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
-using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Infraestrutura;
 using Microsoft.AspNetCore.Mvc;
 
 public sealed class EquipamentoController : Controller
 {
     private readonly IRepositorioEquipamento repositorioEquipamento;
     private readonly IRepositorioFabricante repositorioFabricante;
+    private readonly IRepositorioChamado repositorioChamado;
 
     public EquipamentoController(
         IRepositorioEquipamento repositorioEquipamento,
-        IRepositorioFabricante repositorioFabricante
+        IRepositorioFabricante repositorioFabricante,
+        IRepositorioChamado repositorioChamado
     )
     {
         this.repositorioEquipamento = repositorioEquipamento;
         this.repositorioFabricante = repositorioFabricante;
+        this.repositorioChamado = repositorioChamado;
     }
 
     [HttpGet]
@@ -159,6 +161,16 @@ public sealed class EquipamentoController : Controller
     [HttpPost]
     public ActionResult Excluir(ExcluirEquipamentoViewModel viewModel)
     {
+        if (repositorioChamado.ExisteParaEquipamento(viewModel.Id))
+        {
+            ModelState.AddModelError(
+                string.Empty,
+                "Este equipamento não pode ser excluído porque possui chamados vinculados."
+            );
+
+            return View(viewModel);
+        }
+
         bool conseguiuExcluir = repositorioEquipamento.Excluir(viewModel.Id);
 
         if (!conseguiuExcluir)

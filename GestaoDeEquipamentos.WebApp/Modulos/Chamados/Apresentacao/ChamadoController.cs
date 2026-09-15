@@ -1,19 +1,17 @@
 using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
-using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
-using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoDeEquipamentos.WebApp.Modulos.Chamados.Apresentacao;
 
 public sealed class ChamadoController : Controller
 {
-    private readonly RepositorioChamadoEmArquivo repositorioChamado;
-    private readonly RepositorioEquipamentoEmArquivo repositorioEquipamento;
+    private readonly IRepositorioChamado repositorioChamado;
+    private readonly IRepositorioEquipamento repositorioEquipamento;
 
     public ChamadoController(
-        RepositorioChamadoEmArquivo repositorioChamado,
-        RepositorioEquipamentoEmArquivo repositorioEquipamento)
+        IRepositorioChamado repositorioChamado,
+        IRepositorioEquipamento repositorioEquipamento)
     {
         this.repositorioChamado = repositorioChamado;
         this.repositorioEquipamento = repositorioEquipamento;

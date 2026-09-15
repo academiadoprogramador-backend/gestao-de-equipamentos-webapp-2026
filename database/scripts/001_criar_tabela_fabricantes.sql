@@ -1,0 +1,12 @@
+CREATE TABLE dbo.TBFabricantes
+(
+    Id INT IDENTITY(1, 1) NOT NULL,
+    Nome NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(254) NOT NULL,
+    Telefone NVARCHAR(15) NOT NULL,
+
+    CONSTRAINT PK_TBFabricantes PRIMARY KEY (Id),
+    CONSTRAINT CK_TBFabricantes_Nome CHECK (LEN(LTRIM(RTRIM(Nome))) BETWEEN 2 AND 100),
+    CONSTRAINT CK_TBFabricantes_Email CHECK (LEN(LTRIM(RTRIM(Email))) > 0),
+    CONSTRAINT CK_TBFabricantes_Telefone CHECK (LEN(Telefone) BETWEEN 14 AND 15)
+);

@@ -7,4 +7,5 @@ public interface IRepositorioEquipamento
     bool Excluir(int idSelecionado);
     Equipamento? SelecionarPorId(int idSelecionado);
     List<Equipamento> SelecionarTodos();
+    bool ExisteParaFabricante(int fabricanteId);
 }

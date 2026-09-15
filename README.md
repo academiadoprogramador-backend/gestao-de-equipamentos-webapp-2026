@@ -108,14 +108,29 @@ Como funcionário Junior quer ter a possibilidade de excluir um chamado.
 ## Como utilizar
 
 1. Clone o repositório ou baixe o código fonte.
-2. Abra o terminal ou o prompt de comando e navegue até a pasta raiz
-3. Utilize o comando abaixo para restaurar as dependências do projeto.
+2. Crie um banco SQL Server chamado `GestaoDeEquipamentosDB`.
+3. Execute, na ordem, os scripts disponíveis em `database/scripts`:
+
+   ```text
+   001_criar_tabela_fabricantes.sql
+   002_criar_tabela_equipamentos.sql
+   003_criar_tabela_chamados.sql
+   ```
+
+4. Configure a connection string `ConnectionStrings:SqlServerDocker` por meio do arquivo de configuração do ambiente ou de uma variável de ambiente:
+
+   ```text
+   ConnectionStrings__SqlServerDocker
+   ```
+
+5. Abra o terminal ou o prompt de comando e navegue até a pasta raiz.
+6. Utilize o comando abaixo para restaurar as dependências do projeto.
 
    ```bash
    dotnet restore
    ```
 
-4. Para executar o projeto compilando em tempo real
+7. Para executar o projeto compilando em tempo real:
 
    ```bash
    dotnet run --project GestaoDeEquipamentos.WebApp
